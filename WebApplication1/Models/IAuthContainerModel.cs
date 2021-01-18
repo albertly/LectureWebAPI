@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Claims;
-
-namespace WebApplication1.Models
+﻿namespace WebApplication1.Models
 {
     public interface IAuthContainerModel
     {
@@ -13,7 +7,7 @@ namespace WebApplication1.Models
         string SecurityAlgorithm { get; set; }
         int ExpireMinutes { get; set; }
 
-        Claim[] Claims { get; set; }
+        System.Security.Claims.Claim[] Claims { get; set; }
         #endregion
     }
 }

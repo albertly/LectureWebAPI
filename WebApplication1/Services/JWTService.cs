@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using WebApplication1.Models;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace WebApplication1.Services
 {
@@ -38,7 +36,7 @@ namespace WebApplication1.Services
 
             TokenValidationParameters tokenValidationParameters = GetTokenValidationParameters();
             JwtSecurityToken jwt = new JwtSecurityToken();
-          
+
             JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             try
             {
@@ -67,7 +65,9 @@ namespace WebApplication1.Services
             {
                 Subject = new ClaimsIdentity(model.Claims),
                 Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt32(model.ExpireMinutes)),
-                SigningCredentials = new SigningCredentials(GetSymmetricSecurityKey(), model.SecurityAlgorithm)
+                SigningCredentials = new SigningCredentials(GetSymmetricSecurityKey(), model.SecurityAlgorithm),
+                Issuer = "Fiver.Security.Bearer",
+                Audience = "Fiver.Security.Bearer",
             };
 
             JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
@@ -85,7 +85,7 @@ namespace WebApplication1.Services
         /// </remarks>
         /// <param name="token"></param>
         /// <returns>IEnumerable of claims for the given token.</returns>
-        public IEnumerable<Claim> GetTokenClaims(string token)
+        public IEnumerable<System.Security.Claims.Claim> GetTokenClaims(string token)
         {
             if (string.IsNullOrEmpty(token))
                 throw new ArgumentException("Given token is null or empty.");
@@ -112,12 +112,18 @@ namespace WebApplication1.Services
             return new SymmetricSecurityKey(symmetricKey);
         }
 
-        private TokenValidationParameters GetTokenValidationParameters()
+        public TokenValidationParameters GetTokenValidationParameters()
         {
             return new TokenValidationParameters()
             {
-                ValidateIssuer = false,
-                ValidateAudience = false,
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = "Fiver.Security.Bearer",
+                ValidAudience = "Fiver.Security.Bearer",
+
                 IssuerSigningKey = GetSymmetricSecurityKey()
             };
         }

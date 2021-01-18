@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication1.Models
 {
-    public class User
+    public class UserForCreationDto
     {
-        [Key]
-        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(100)]

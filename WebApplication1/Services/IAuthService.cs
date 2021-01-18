@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Security.Claims;
+﻿using System.Collections.Generic;
 using WebApplication1.Models;
 
 namespace WebApplication1.Services
@@ -13,7 +9,7 @@ namespace WebApplication1.Services
 
         bool IsTokenValid(string token);
         string GenerateToken(IAuthContainerModel model);
-        IEnumerable<Claim> GetTokenClaims(string token);
+        IEnumerable<System.Security.Claims.Claim> GetTokenClaims(string token);
     }
 }
 
