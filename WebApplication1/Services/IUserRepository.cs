@@ -23,6 +23,6 @@ namespace WebApplication1.Services
 
         Claim GetClaim(Guid userId, Guid claimId);
 
-        bool Save();
+        Task<bool> Save();
     }
 }

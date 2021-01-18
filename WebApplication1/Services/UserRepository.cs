@@ -99,9 +99,9 @@ namespace WebApplication1.Services
            return await _context.Users.ToListAsync<User>();
         }
 
-        public bool Save()
+        public async Task<bool> Save()
         {
-            return (_context.SaveChanges() >= 0);
+            return (await _context.SaveChangesAsync() >= 0);
         }
 
         public void UpdateUser(User user)

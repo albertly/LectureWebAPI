@@ -34,6 +34,7 @@ namespace ClientWeb
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 Environment.Exit(-1);
             }
 
@@ -57,7 +58,7 @@ namespace ClientWeb
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 throw;
             }
 

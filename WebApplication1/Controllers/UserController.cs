@@ -29,11 +29,12 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost("User")]
-        public ActionResult<User> AddUser([FromBody] UserForCreationDto user)
+        public async Task<ActionResult<User>> AddUser([FromBody] UserForCreationDto user)
         {
+          
             var userEntity = _mapper.Map<User>(user);
             _userRepository.AddUser(userEntity);
-            _userRepository.Save();
+            await _userRepository.Save();
             var userDto = _mapper.Map<UserDto>(userEntity);
             return CreatedAtRoute("GetUser", new { userId = userEntity.Id }, user);
         }
